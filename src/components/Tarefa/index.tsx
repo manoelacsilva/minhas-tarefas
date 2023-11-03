@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import * as Style from './styles'
 
+import * as enums from '../../utils/enums/Tarefa'
+
 type Props = {
   titulo: string
-  prioridade: string
-  status: string
+  prioridade: enums.Prioridade
+  status: enums.Status
   descricao: string
 }
 
@@ -14,23 +16,27 @@ const Tarefa = ({ descricao, prioridade, status, titulo }: Props) => {
   return (
     <Style.Card>
       <Style.Titulo>{titulo}</Style.Titulo>
-      <Style.Tag>{prioridade}</Style.Tag>
-      <Style.Tag>{status}</Style.Tag>
+      <Style.Tag parametro="prioridade" prioridade={prioridade}>
+        {prioridade}
+      </Style.Tag>
+      <Style.Tag parametro="status" status={status}>
+        {status}
+      </Style.Tag>
       <Style.Descricao value={descricao} />
       <Style.BarraAcoes>
         {estaEditando ? (
           <>
-            <Style.Botao>Salvar</Style.Botao>
-            <Style.Botao onClick={() => setEstaEditando(false)}>
+            <Style.BotaoSalvar>Salvar</Style.BotaoSalvar>
+            <Style.BotaoCancelarRemover onClick={() => setEstaEditando(false)}>
               Cancelar
-            </Style.Botao>
+            </Style.BotaoCancelarRemover>
           </>
         ) : (
           <>
             <Style.Botao onClick={() => setEstaEditando(true)}>
               Editar
             </Style.Botao>
-            <Style.Botao>Remover</Style.Botao>
+            <Style.BotaoCancelarRemover>Remover</Style.BotaoCancelarRemover>
           </>
         )}
       </Style.BarraAcoes>
